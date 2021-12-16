@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-
+import { Link } from 'react-router-dom';
 export default function Cards({ data }) {
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -26,9 +26,11 @@ export default function Cards({ data }) {
             </CardActionArea>
             <CardActions>
                 <div style={{ margin: "auto" }}>
-                    <Button size="small" color="primary">
-                        View Details
-                    </Button>
+                    <Link style={{ textDecoration: 'none' }} to={`/${data.url}`}>
+                        <Button size="small" color="primary">
+                            View Details
+                        </Button>
+                    </Link>
                 </div>
 
             </CardActions>

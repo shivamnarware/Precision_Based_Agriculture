@@ -1,20 +1,44 @@
-import Carousel from './Components/Carousel/Carousel';
 import Footer from './Components/Footer/Footer';
 import Header from './Components/Header/Header';
 import './App.css';
-import MainCard from './Components/MainCard/MainCard';
 import Fertilizers from './Components/Forms/Fertilizers';
+import Irrigation from './Components/Forms/Irrigation';
+import CropType from './Components/Forms/CropType';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Home from "./Components/Home/Home"
+import { Fragment, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
+
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Carousel />
-      <h1>lorem ipsum</h1>
-      <MainCard />
-      <Fertilizers />
-      <Footer />
-    </div>
+    <Router>
+      <Fragment>
+        <div className="App">
+        <ScrollToTop />
+          <Header />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/fertilizer" exact component={Fertilizers} />
+            <Route path="/irrigation" exact component={Irrigation} />
+            <Route path="/croptype" exact component={CropType} />
+          </Switch>
+          <Footer />
+        </div>
+      </Fragment>
+
+    </Router>
+
   );
 }
 

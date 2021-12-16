@@ -2,6 +2,10 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import { blue } from '@mui/material/colors';
+
 
 const soilArray = ['Sandy', 'Loamy', 'Black', 'Red', 'Clay'];
 
@@ -23,7 +27,14 @@ function Fertilizers(props) {
     const soilidx = (element) => element === soil;
     const idxsoil = soilArray.findIndex(soilidx);
 
-
+    const ColorButton = styled(Button)(({ theme }) => ({
+        color: theme.palette.getContrastText(blue[500]),
+        backgroundColor: blue[500],
+        '&:hover': {
+            backgroundColor: blue[700],
+        },
+        width: "62%"
+    }));
 
     return (
         <Box
@@ -41,7 +52,7 @@ function Fertilizers(props) {
             noValidate
             autoComplete="off"
         >
-            <div style={{marginLeft:"35%",marginRight:"30%"}}>
+            <div style={{ marginLeft: "35%", marginRight: "30%" }}>
                 <div>
                     <TextField
                         fullWidth
@@ -51,6 +62,7 @@ function Fertilizers(props) {
                         value={soil}
                         onChange={handleChangeForSoil}
                         helperText="Please select Soil Type"
+                        size="small"
                     >
                         {soilArray.map((option, idx) => (
                             <MenuItem key={option} value={option}>
@@ -64,28 +76,36 @@ function Fertilizers(props) {
                         required
                         label="Nitrogen Content"
                         variant="outlined"
-                        helperText="Please select Nitrogen Content" />
+                        helperText="Please select Nitrogen Content"
+                        size="small"
+                    />
                 </div>
                 <div>
                     <TextField id="outlined-basic"
                         required
                         label="Potassium Content"
                         variant="outlined"
-                        helperText="Please select Potassium Content" />
+                        helperText="Please select Potassium Content"
+                        size="small"
+                    />
                 </div>
                 <div>
                     <TextField id="outlined-basic"
                         required
                         label="Phosphorus Content"
                         variant="outlined"
-                        helperText="Please select Phosphorus Content" />
+                        helperText="Please select Phosphorus Content"
+                        size="small"
+                    />
                 </div>
                 <div>
                     <TextField id="outlined-basic"
                         required
                         label="Phosphorus Content"
                         variant="outlined"
-                        helperText="Please select Phosphorus Content" />
+                        helperText="Please select Phosphorus Content"
+                        size="small"
+                    />
                 </div>
                 <div>
                     <TextField
@@ -96,6 +116,9 @@ function Fertilizers(props) {
                         value={fertilizer}
                         onChange={handleChangeForTypeOfFertilizer}
                         helperText="Please select Fertilizer Type"
+                        size="small"
+                        style={{paddingBottom: "30px" }}
+
                     >
                         {fetilizerArray.map((option, idx) => (
                             <MenuItem key={idx} value={option}>
@@ -103,6 +126,9 @@ function Fertilizers(props) {
                             </MenuItem>
                         ))}
                     </TextField>
+                </div>
+                <div>
+                    <ColorButton variant="contained">Predict</ColorButton>
                 </div>
             </div>
 

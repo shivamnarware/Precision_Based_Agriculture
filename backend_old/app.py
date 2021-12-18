@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn import preprocessing
+from sklearn.ensemble import RandomForestClassifier
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import pickle
@@ -12,10 +13,10 @@ app = Flask(__name__)
 
 CORS(app)
 
-model = pickle.load(open('model.pkl', 'rb'))
-model2 = pickle.load(open('model5.pkl', 'rb'))
+fertilizer = pickle.load(open('fertilizer.pkl', 'rb'))
+irrigation = pickle.load(open('irrigation.pkl', 'rb'))
 model5 = pickle.load(open('model4.pkl', 'rb'))
-model4 = pickle.load(open('model4.pkl', 'rb'))
+croptype = pickle.load(open('croptype.pkl', 'rb'))
 
 @app.route('/fertilizer')
 def home():
@@ -32,11 +33,6 @@ def home4():
 
 @app.route('/fertilizer',methods=['POST'])
 def predict():
-    '''
-    For rendering results on HTML GUI
-    '''
-    print("hello")
-    print(request.data)
     data=json.loads(request.data)
     soiltype=float(data["soilType"])
     n=float(data['n'])
@@ -45,36 +41,27 @@ def predict():
     fertilizer=float(data['fertilizer'])
     croptype=float(data['croptype'])
     int_features=[soiltype,n,p,k,fertilizer,croptype]
-    print(request.form.values())
-    # int_features = [float(x) for x in request.form.values()]
-    print(int_features)
     nm=preprocessing.scale(int_features)
     final_features = [np.array(nm)]
-    prediction = model.predict(final_features)
-    #print(x)
+    prediction = fertilizer.predict(final_features)
     output = prediction[0]
-    print(output[0])
     res=str(output[0])
-    print(res)
-    # return render_template('form.html', prediction_text='Amount of Fertilizer should be used is  {} kg per hectare'.format(output))
     return res
 
 @app.route('/irrigation',methods=['POST'])
 def predict2():
-    '''
-    For rendering results on HTML GUI
-    '''
-    
-    int_features = [float(x) for x in request.form.values()]
+    data=json.loads(request.data)
+    soilHumidity=float(data['soilHumidity'])
+    soilwater=float(data['soilwater'])
+    cropseason=float(data['cropseason'])
+    area=float(data['area'])
+    int_features = [soilHumidity,soilwater,cropseason,area]
     nm=preprocessing.scale(int_features)
     final_features = [np.array(nm)]
-    
-    prediction = model2.predict(final_features)
-    #print(x)
-
+    prediction = irrigation.predict(final_features)
     output = prediction[0]
-
-    return render_template('form2.html', prediction_text2='Amount of irrigation water required is {} litres per week'.format(output))
+    res=str(output[0])
+    return res
 
 @app.route('/Production',methods=['POST'])
 def predict3():
@@ -84,26 +71,27 @@ def predict3():
     int_features = [float(x) for x in request.form.values()]
     final_features = [np.array(int_features)]
     prediction = model3.predict(final_features)
-    #print(x)
-
     output = prediction[0]
 
     return render_template('form3.html', prediction_text3='Production will be of approx  {} quintals'.format(output))
 
 @app.route('/crop',methods=['POST'])
 def predict4():
-    '''
-    For rendering results on HTML GUI
-    '''
-    int_features = [float(x) for x in request.form.values()]
+    data=json.loads(request.data)
+    print(data)
+    ph=float(data['ph'])
+    n=float(data['n'])
+    p=float(data['p'])
+    k=float(data['k'])
+    temp=float(data['temp'])
+    humidity=float(data['humidity'])
+    rainfall=float(data['rainfall'])
+    int_features = [n,p,k,temp,humidity,ph,rainfall]
+    print(int_features)
     final_features = [np.array(int_features)]
-    prediction = model4.predict(final_features)
-    #print(x)
-
-    output = abs(prediction[0])
-
-    return render_template('form4.html', prediction_text4='Crop Type should be grown is  {}  i.e, for carrot: 1, coconut: 2, cotton: 3, groundnut: 4, melon: 5, millet: 6, potatoes: 7, rice: 8, vegetable: 9, wheat: 10'.format(output))
-
+    prediction = croptype.predict(final_features)
+    res=prediction[0]
+    return res
 
 if __name__ == "__main__":
     app.run(debug=True)

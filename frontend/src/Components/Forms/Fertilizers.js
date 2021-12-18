@@ -69,9 +69,11 @@ function Fertilizers(props) {
     const submitHandler = () => {
         console.log(res);
         setError({ n: res.n, p: res.p, k: res.k });
-        axios.post("http://127.0.0.1:5000/fertilizer", res).
-            then(res => setData(res.data));
-
+        if (res.soilType !== "" && res.n !== "" && res.p !== "" && res.k !== "" && res.fertilizer !== "" && res.croptype !== "") {
+            axios.post("http://127.0.0.1:5000/fertilizer", res).then(res => setData(res.data)).catch(setData("Server error"));;
+        }else{
+            setData("Please enter all the value")
+        }
     }
 
     return (
@@ -234,6 +236,7 @@ function Fertilizers(props) {
                 }}
                 noValidate
                 autoComplete="off"
+                textAlign="center"
             >
                 {data}
             </Box>

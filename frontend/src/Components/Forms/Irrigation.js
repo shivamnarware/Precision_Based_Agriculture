@@ -6,15 +6,28 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { blue } from '@mui/material/colors';
 import { Typography } from '@mui/material';
-
+import { useState } from 'react';
+import axios from 'axios';
 const cropseason = ['Kharif', 'Whole year', 'Autumn', 'Rabi', 'Summer', 'Winter']
 
 function Irrigation(props) {
     const [season, setSeason] = React.useState('Kharif');
 
+    const obj = {
+        soilHumidity: "",
+        soilwater: "",
+        cropseason: "0",
+        area: ""
+    }
+    const [res, setRes] = useState(obj);
+    const [error, setError] = useState({ soilHumidity: "xx", soilwater: "xx", area: "xx" });
+
     const handleChangeForTypeOfIrrigation = (event) => {
         event.preventDefault();
-        setSeason(event.target.value)
+        setSeason(event.target.value);
+        const season = (element) => element === event.target.value;
+        const idxseason = cropseason.findIndex(season);
+        setRes({ ...res, cropseason: idxseason + "" })
     }
 
     const ColorButton = styled(Button)(({ theme }) => ({
@@ -25,6 +38,17 @@ function Irrigation(props) {
         },
         width: "62%"
     }));
+
+    const [data, setData] = useState("Not Executed");
+    const submitHandler = () => {
+        console.log(res);
+        setError({ soilHumidity: res.soilHumidity, soilwater: res.soilwater, area: res.area });
+        if (res.soilHumidity !== "" && res.soilwater !== "" && res.cropseason !== "" && res.area !== "") {
+            axios.post("http://127.0.0.1:5000/irrigation", res).then(res => setData(res.data)).catch(setData("Server error"));
+        } else {
+            setData("Please enter all the value")
+        }
+    }
 
     return (
         <div>
@@ -56,14 +80,28 @@ function Irrigation(props) {
                             required
                             label="soil Humidity(bar)"
                             variant="outlined"
-                            helperText="Please select soil Humidity(bar)" />
+                            error={error.soilHumidity === ""}
+                            helperText="Please select soil Humidity(bar)"
+                            onChange={(e) => {
+                                setRes({ ...res, soilHumidity: e.target.value })
+                                setError({ ...error, soilHumidity: e.target.value })
+                            }
+                            }
+                        />
                     </div>
                     <div>
                         <TextField id="outlined-basic"
                             required
                             label="soil water content (volume per 5cm )"
                             variant="outlined"
-                            helperText="Please select soil water content (volume per 5cm )" />
+                            error={error.soilwater === ""}
+                            helperText="Please select soil water content (volume per 5cm )"
+                            onChange={(e) => {
+                                setRes({ ...res, soilwater: e.target.value })
+                                setError({ ...error, soilwater: e.target.value })
+                            }
+                            }
+                        />
                     </div>
                     <div>
                         <TextField
@@ -74,7 +112,6 @@ function Irrigation(props) {
                             value={season}
                             onChange={handleChangeForTypeOfIrrigation}
                             helperText="Please select Crop Season"
-
                         >
                             {cropseason.map((option, idx) => (
                                 <MenuItem key={idx} value={option}>
@@ -88,12 +125,18 @@ function Irrigation(props) {
                             required
                             label="Area (Hectacre)"
                             variant="outlined"
+                            error={error.area === ""}
                             helperText="Please select Area (Hectacre)"
                             style={{ paddingBottom: "30px" }}
+                            onChange={(e) => {
+                                setRes({ ...res, area: e.target.value })
+                                setError({ ...error, area: e.target.value })
+                            }
+                            }
                         />
                     </div>
                     <div>
-                        <ColorButton variant="contained">Predict</ColorButton>
+                        <ColorButton onClick={submitHandler} variant="contained">Predict</ColorButton>
                     </div>
                 </div>
             </Box>
@@ -112,8 +155,9 @@ function Irrigation(props) {
                 }}
                 noValidate
                 autoComplete="off"
+                textAlign="center"
             >
-
+                {data}
             </Box>
         </div>
 

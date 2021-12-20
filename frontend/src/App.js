@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from "./Components/Home/Home"
 import { Fragment, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
-
+import Register from './Authentication/Register'
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -27,12 +27,13 @@ function App() {
         <div className="App">
         <ScrollToTop />
           <Header />
-          <Switch>
+          <Register />
+          {/* <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/fertilizer" exact component={Fertilizers} />
             <Route path="/irrigation" exact component={Irrigation} />
             <Route path="/croptype" exact component={CropType} />
-          </Switch>
+          </Switch> */}
           <Footer />
         </div>
       </Fragment>

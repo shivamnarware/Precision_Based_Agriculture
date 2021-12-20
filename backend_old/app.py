@@ -1,7 +1,6 @@
 import numpy as np
 from sklearn import preprocessing
-from sklearn.ensemble import RandomForestClassifier
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template
 from flask_cors import CORS
 import pickle
 from flask import request
@@ -10,7 +9,6 @@ import json
 #export FLASK_ENV=development
 #flask run
 app = Flask(__name__)
-
 CORS(app)
 
 fertilizer = pickle.load(open('fertilizer.pkl', 'rb'))

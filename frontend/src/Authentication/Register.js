@@ -10,7 +10,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
-const Signup = () => {
+const Register = () => {
     const paperStyle = { padding: '30px 50px', width: 350, margin: "70px auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
@@ -20,6 +20,7 @@ const Signup = () => {
         password: '',
         showPassword: false,
     });
+
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -35,6 +36,31 @@ const Signup = () => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+
+
+    // ---------------------For Confirm Password-------------------------
+
+    const [valuesconfirm, setValuesConfirm] = React.useState({
+        passwordconfirm: '',
+        showPasswordConfirm: false,
+    });
+
+
+    const handleChangeConfirm = (prop) => (event) => {
+        setValuesConfirm({ ...valuesconfirm, [prop]: event.target.value });
+    };
+
+    const handleClickShowPasswordConfirm = () => {
+        setValuesConfirm({
+            ...valuesconfirm,
+            showPasswordConfirm: !valuesconfirm.showPasswordConfirm,
+        });
+    };
+
+    const handleMouseDownPasswordConfirm = (event) => {
+        event.preventDefault();
+    };
+
 
 
     return (
@@ -80,18 +106,18 @@ const Signup = () => {
                             <InputLabel htmlFor="outlined-adornment-password">Confirm Password</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password"
-                                type={values.showPassword ? 'text' : 'password'}
-                                value={values.password}
-                                onChange={handleChange('password')}
+                                type={valuesconfirm.showPasswordConfirm ? 'text' : 'password'}
+                                value={valuesconfirm.passwordconfirm}
+                                onChange={handleChangeConfirm('passwordconfirm')}
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
+                                            onClick={handleClickShowPasswordConfirm}
+                                            onMouseDown={handleMouseDownPasswordConfirm}
                                             edge="end"
                                         >
-                                            {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                            {valuesconfirm.showPasswordConfirm ? <VisibilityOff /> : <Visibility />}
                                         </IconButton>
                                     </InputAdornment>
                                 }
@@ -107,4 +133,4 @@ const Signup = () => {
     )
 }
 
-export default Signup;
+export default Register;

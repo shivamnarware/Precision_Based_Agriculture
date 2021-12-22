@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Grid, Paper, Avatar, Typography, TextField, Button } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import IconButton from '@mui/material/IconButton';
@@ -61,7 +61,26 @@ const Register = () => {
         event.preventDefault();
     };
 
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState("");
 
+    const registerHandler = () => {
+        const config = {
+            header: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        if (values.password != valuesconfirm.passwordconfirm) {
+            setValues({ ...values, password: '' });
+            setValuesConfirm({ ...valuesconfirm, passwordconfirm: '' });
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+            return setError("Password do not match");
+        }
+    }
 
     return (
         <Grid>
@@ -128,6 +147,27 @@ const Register = () => {
                     </div>
                     <Button style={{ marginTop: "5%", marginLeft: "35%" }} type='submit' variant='contained' color='primary' size="small">Sign up</Button>
                 </form>
+                {error && <Box
+                    component="form"
+                    sx={{
+                        '& .MuiTextField-root': { s: 1, width: '20ch' },
+                        marginLeft: "25%",
+                        marginRight: "25%",
+                        border: '1px solid grey',
+                        paddingTop: "4%",
+                        marginTop: "5%",
+                        borderRadius: "7px",
+                        boxShadow: "5px 10px #08308E",
+                        paddingBottom: "5%"
+                    }}
+                    noValidate
+                    autoComplete="off"
+                    textAlign="center"
+                    color="red"
+                >
+                    {error}
+                </Box>}
+
             </Paper>
         </Grid>
     )

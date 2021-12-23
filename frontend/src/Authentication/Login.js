@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, Paper, Avatar, Typography, TextField, Button } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import IconButton from '@mui/material/IconButton';
@@ -15,6 +15,15 @@ const Login = () => {
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
     const marginbwbox = { marginBottom: "6%", marginLeft: "2%" }
+
+    useEffect(() => {
+        if (localStorage.getItem("authToken")) {
+            history.push("/")
+        }
+    }, [history])
+
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState("");
 
     const [values, setValues] = React.useState({
         password: '',
@@ -37,6 +46,27 @@ const Login = () => {
         event.preventDefault();
     };
 
+    const loginHandler = (e) => {
+        e.preventDefault();
+        const config = {
+            header: {
+                "Content-Type": "application/json"
+            }
+        };
+
+        try {
+            const { data } = axios.post("http://localhost:5000/api/auth/login", { email, password }, config);
+            localStorage.setItem("authToken", data.token);
+            history.push("/");
+        } catch (error) {
+            setError(error.response.data.error);
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+        }
+    }
+
+
     return (
         <Grid>
             <Paper elevation={20} style={paperStyle}>
@@ -47,8 +77,10 @@ const Login = () => {
                     <h2 style={headerStyle}>Sign In</h2>
                     <Typography variant='caption' gutterBottom>Login Credentials</Typography>
                 </Grid>
-                <form>
-                    <TextField style={marginbwbox} fullWidth label='Email' placeholder="Enter your email" variant="outlined" size="small" />
+                <form onSubmit={loginHandler}>
+                    <TextField style={marginbwbox} fullWidth label='Email' placeholder="Enter your email" variant="outlined" size="small"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
                     <div style={{ marginBottom: "5%" }}>
                         <FormControl sx={{ m: 1, width: '40.5ch' }} variant="outlined" size="small">
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
@@ -76,6 +108,26 @@ const Login = () => {
                     </div>
                     <Button style={{ marginTop: "5%", marginLeft: "38%" }} type='submit' variant='contained' color='primary' size="small">Sign In</Button>
                 </form>
+                {error && <Box
+                    component="form"
+                    sx={{
+                        '& .MuiTextField-root': { s: 1, width: '20ch' },
+                        marginLeft: "25%",
+                        marginRight: "25%",
+                        border: '1px solid grey',
+                        paddingTop: "4%",
+                        marginTop: "5%",
+                        borderRadius: "7px",
+                        boxShadow: "5px 10px #08308E",
+                        paddingBottom: "5%"
+                    }}
+                    noValidate
+                    autoComplete="off"
+                    textAlign="center"
+                    color="red"
+                >
+                    {error}
+                </Box>}
             </Paper>
         </Grid>
     )

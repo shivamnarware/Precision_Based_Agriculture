@@ -8,9 +8,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import axios from 'axios'
 
-
-const Register = () => {
+const Register = ({ history }) => {
     const paperStyle = { padding: '30px 50px', width: 350, margin: "70px auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
@@ -65,7 +65,15 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
 
-    const registerHandler = () => {
+    useEffect(() => {
+        if (localStorage.getItem("authToken")) {
+            history.push("/")
+        }
+
+    }, [history])
+
+    const registerHandler = (e) => {
+        e.preventDefault();
         const config = {
             header: {
                 "Content-Type": "application/json"
@@ -80,6 +88,17 @@ const Register = () => {
             }, 5000);
             return setError("Password do not match");
         }
+
+        try {
+            const { data } = axios.post("/api/auth/register", { username, email, password }, config);
+            localStorage.setItem("authToken", data.token);
+            history.push("/");
+        } catch (error) {
+            setError(error.response.data.error);
+            setTimeout(() => {
+                setError("");
+            }, 5000)
+        }
     }
 
     return (
@@ -92,9 +111,13 @@ const Register = () => {
                     <h2 style={headerStyle}>Sign Up</h2>
                     <Typography variant='caption' gutterBottom>Please fill this form to create an account !</Typography>
                 </Grid>
-                <form>
-                    <TextField style={marginbwbox} fullWidth label='Username' placeholder="Enter your username" variant="outlined" size="small" />
-                    <TextField style={marginbwbox} fullWidth label='Email' placeholder="Enter your email" variant="outlined" size="small" />
+                <form onClick={registerHandler}>
+                    <TextField style={marginbwbox} fullWidth label='Username' placeholder="Enter your username" variant="outlined" size="small"
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <TextField style={marginbwbox} fullWidth label='Email' placeholder="Enter your email" variant="outlined" size="small"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
                     <div style={{ marginBottom: "5%" }}>
                         <FormControl sx={{ m: 1, width: '40.5ch' }} variant="outlined" size="small">
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>

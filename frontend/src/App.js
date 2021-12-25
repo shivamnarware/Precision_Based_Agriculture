@@ -29,6 +29,7 @@ function App() {
         <ScrollToTop />
           <Header />
           <Login />
+          {/* <PrivateRoute exact path="/" component={PrivateScreen} /> */}
           {/* <Register /> */}
           {/* <Switch>
             <Route path="/" exact component={Home} />

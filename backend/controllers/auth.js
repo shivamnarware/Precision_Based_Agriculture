@@ -11,6 +11,7 @@ exports.register = async (req, res, next) => {
             email,
             password
         });
+        
         sendtoken(user, 201, res);
     } catch (error) {
         next(error);
@@ -83,5 +84,6 @@ exports.resetpassword = (req, res, next) => {
 const sendtoken = async (user, statusCode, res) => {
     const token = await user.getSignedToken();
     console.log(token)
+    
     res.status(statusCode).json({ success: true, token });
 }

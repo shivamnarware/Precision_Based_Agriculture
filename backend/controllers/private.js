@@ -9,7 +9,7 @@ exports.getPrivateData = (req, res, next) => {
 };
 
 exports.getComments = async (req, res, next) => {
-    const data = await Comment.find({path: 'reply',populate: { path: 'reply' }});
+    const data = await Comment.find({ path: 'reply', populate: { path: 'reply' } });
     res.status(200).json({
         sucess: "true",
         data: data
@@ -27,4 +27,24 @@ exports.postComments = async (req, res, next) => {
         sucess: "true",
         data: data
     });
+}
+
+exports.getReplyComments = async (req, res, next) => {
+    const data = await Comment.findById(req.params.id);
+    res.status(200).json({
+        sucess: "true",
+        data: data
+    })
+}
+
+exports.postReplyComments=async(req,res,next)=>{
+    const data=req.body;
+    const comment=await Comment.findById(req.params.id);
+    const data=await Reply.create(req.body);
+    comment.reply.push(data);
+    comment.save();
+    res.status(200).json({
+        sucess: "true",
+        data: comment
+    })
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Grid, Paper, Avatar, Typography, TextField, Button } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import IconButton from '@mui/material/IconButton';
@@ -9,6 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from 'axios'
+import { Box } from '@mui/system';
 
 const Register = ({ history }) => {
     const paperStyle = { padding: '30px 50px', width: 350, margin: "70px auto" }
@@ -20,7 +21,6 @@ const Register = ({ history }) => {
         password: '',
         showPassword: false,
     });
-
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -90,7 +90,8 @@ const Register = ({ history }) => {
         }
 
         try {
-            const { data } = axios.post("/api/auth/register", { username, email, password }, config);
+            const password = values.password
+            const { data } = axios.post("http://localhost:5000/api/auth/register", { username, email, password }, config);
             localStorage.setItem("authToken", data.token);
             history.push("/");
         } catch (error) {

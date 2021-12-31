@@ -1,6 +1,6 @@
 // const User=require("../models/Users");
 const Comment = require("../models/Comments");
-const Reply=require("../models/Reply");
+const Reply = require("../models/Reply");
 exports.getPrivateData = (req, res, next) => {
     res.status(200).json({
         sucess: "true",
@@ -9,7 +9,8 @@ exports.getPrivateData = (req, res, next) => {
 };
 
 exports.getComments = async (req, res, next) => {
-    const data = await Comment.find({ path: 'reply', populate: { path: 'reply' } });
+    const data = await Comment.find({}).populate('reply').exec();
+    console.log(data);
     res.status(200).json({
         sucess: "true",
         data: data
@@ -40,10 +41,10 @@ exports.getReplyComments = async (req, res, next) => {
 }
 
 exports.postReplyComments = async (req, res, next) => {
-    const val=req.body;
+    const val = req.body;
     console.log(val);
     const comment = await Comment.findById(req.params.replyid);
-    const data = await Reply.create({text:val.data});
+    const data = await Reply.create({ text: val.data });
     comment.reply.push(data);
     comment.save();
     res.status(200).json({

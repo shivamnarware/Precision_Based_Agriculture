@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, Paper, Avatar, Typography, TextField, Button } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import IconButton from '@mui/material/IconButton';
@@ -8,19 +8,20 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import axios from 'axios';
+import { Box } from '@mui/system';
 
-
-const Login = () => {
+const Login = ({ history }) => {
     const paperStyle = { padding: '30px 50px', width: 350, margin: "70px auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
     const marginbwbox = { marginBottom: "6%", marginLeft: "2%" }
 
-    useEffect(() => {
-        if (localStorage.getItem("authToken")) {
-            history.push("/")
-        }
-    }, [history])
+    // useEffect(() => {
+    //     if (localStorage.getItem("authToken")) {
+    //         history.push("/")
+    //     }
+    // }, [history])
 
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
@@ -46,7 +47,7 @@ const Login = () => {
         event.preventDefault();
     };
 
-    const loginHandler = (e) => {
+    const loginHandler = async (e) => {
         e.preventDefault();
         const config = {
             header: {
@@ -55,18 +56,30 @@ const Login = () => {
         };
 
         try {
-            const { data } = axios.post("http://localhost:5000/api/auth/login", { email, password }, config);
-            localStorage.setItem("authToken", data.token);
-            history.push("/");
+            const password = values.password
+            if (email && password) {
+                const {data} = await axios.post("http://localhost:5000/api/auth/login", { email, password }, config);
+                console.log(data)
+                if (!data.error)
+                    setError("");
+                    localStorage.setItem("authToken", data.token);
+                if (data.error){
+                    setError("Invalid credentials");
+                    localStorage.removeItem("authToken");
+                }
+                   
+            } else {
+                setError("Please Add valid email and password");
+                
+            }
+            // history.push("/");
         } catch (error) {
-            setError(error.response.data.error);
+            setError(error);
             setTimeout(() => {
                 setError("");
             }, 5000);
         }
     }
-
-
     return (
         <Grid>
             <Paper elevation={20} style={paperStyle}>
@@ -82,7 +95,7 @@ const Login = () => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <div style={{ marginBottom: "5%" }}>
-                        <FormControl sx={{ m: 1, width: '40.5ch' }} variant="outlined" size="small">
+                        <FormControl sx={{ m: 1, width: '30.5ch' }} variant="outlined" size="small">
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password"

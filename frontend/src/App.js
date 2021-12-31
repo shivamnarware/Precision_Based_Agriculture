@@ -10,7 +10,8 @@ import { Fragment, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import Register from './Authentication/Register'
 import Login from './Authentication/Login';
-
+import PrivateComment from './PrivateScreen/PrivateComments'
+import PrivateScreen from './PrivateScreen/PrivateScreen';
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -26,9 +27,11 @@ function App() {
     <Router>
       <Fragment>
         <div className="App">
-        <ScrollToTop />
+          <ScrollToTop />
           <Header />
+          {/* <PrivateComment /> */}
           <Login />
+          <PrivateScreen />
           {/* <PrivateRoute exact path="/" component={PrivateScreen} /> */}
           {/* <Register /> */}
           {/* <Switch>

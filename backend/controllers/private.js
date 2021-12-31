@@ -1,6 +1,6 @@
 // const User=require("../models/Users");
 const Comment = require("../models/Comments");
-
+const Reply=require("../models/Reply");
 exports.getPrivateData = (req, res, next) => {
     res.status(200).json({
         sucess: "true",
@@ -30,17 +30,20 @@ exports.postComments = async (req, res, next) => {
 }
 
 exports.getReplyComments = async (req, res, next) => {
-    const data = await Comment.findById(req.params.id);
+    console.log(req.params.replyid);
+    const data = await Comment.findById(req.params.replyid);
+    console.log(data);
     res.status(200).json({
         sucess: "true",
         data: data
     })
 }
 
-exports.postReplyComments=async(req,res,next)=>{
-    const data=req.body;
-    const comment=await Comment.findById(req.params.id);
-    const data=await Reply.create(req.body);
+exports.postReplyComments = async (req, res, next) => {
+    const val=req.body;
+    console.log(val);
+    const comment = await Comment.findById(req.params.replyid);
+    const data = await Reply.create({text:val.data});
     comment.reply.push(data);
     comment.save();
     res.status(200).json({

@@ -10,7 +10,7 @@ const PrivateComments = ({ data }) => {
             </Header>
             {
                 data ? data.data.map((item, idx) => (
-                    <PrivateComment item={item}/>
+                    <PrivateComment  value={item}/>
                 )) : <span>No Comments</span>
             }
         </Comment.Group>

@@ -30,16 +30,18 @@ function App() {
           <ScrollToTop />
           <Header />
           {/* <PrivateComment /> */}
-          <Login />
-          <PrivateScreen />
+         
           {/* <PrivateRoute exact path="/" component={PrivateScreen} /> */}
-          {/* <Register /> */}
-          {/* <Switch>
+          <Switch>
+            
             <Route path="/" exact component={Home} />
+            <Route path="/register" exact component={Register} />
+            <Route path="/login" exact component={Login} />
+            <Route  exact path="/screen" component={PrivateScreen}/>
             <Route path="/fertilizer" exact component={Fertilizers} />
             <Route path="/irrigation" exact component={Irrigation} />
             <Route path="/croptype" exact component={CropType} />
-          </Switch> */}
+          </Switch>
           <Footer />
         </div>
       </Fragment>

@@ -9,8 +9,8 @@ router.route("/comments").get(protected,getComments)
 
 router.route("/comments").post(protected,postComments);
 
-router.route('/comments/:replyid').get(protected,getReplyComments)
+router.route('/comments/:replyid').get(getReplyComments)
 
-router.route('/comments/:replyid').post(protected,postReplyComments)
+router.route('/comments/:replyid').post(postReplyComments)
 
 module.exports = router;

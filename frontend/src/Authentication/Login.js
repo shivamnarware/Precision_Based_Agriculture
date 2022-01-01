@@ -63,11 +63,11 @@ const Login = ({ history }) => {
                 if (!data.error)
                     setError("");
                     localStorage.setItem("authToken", data.token);
+                    
                 if (data.error){
                     setError("Invalid credentials");
                     localStorage.removeItem("authToken");
                 }
-                   
             } else {
                 setError("Please Add valid email and password");
                 

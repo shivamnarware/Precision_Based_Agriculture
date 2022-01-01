@@ -1,13 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Comment } from 'semantic-ui-react'
-
-function PrivateComment({ item }) {
-
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
+function PrivateComment({ value }) {
     const [toggle, setToggle] = useState(false);
-   const fun=(e)=>{
-       e.preventDefault();
-       setToggle(!toggle);
-   }
+    const [result, setResult] = useState("");
+    const [item, setItem] = useState(value);
+    const [error, setError] = useState("");
+    const fun = (e) => {
+        e.preventDefault();
+        setToggle(!toggle);
+    }
+    let history = useHistory();
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        const config = {
+            header: {
+                "Content-Type": "application/json",
+                // Authorization: `Shivam ${localStorage.getItem("authToken")}`,
+            },
+        };
+        try {
+            const { data } = await axios.post(`http://localhost:5000/api/private/comments/${item._id}`, { result }, config);
+            console.log(data);
+            setToggle(!toggle);
+            window.location.reload(false);
+        } catch (error) {
+            console.log(error);
+            setError("Error Occured");
+        }
+    }
+
     return (
         <Comment>
             <Comment.Content>
@@ -22,25 +45,26 @@ function PrivateComment({ item }) {
                     <Comment.Action onClick={fun}>Reply</Comment.Action>
                 </Comment.Actions>
             </Comment.Content>
+            {toggle ?
+                <Form reply>
+                    <Form.TextArea onChange={(e) => setResult(e.target.value)} />
+                    <Button onClick={submitHandler} content='Add Reply' labelPosition='left' icon='edit' primary />
+                </Form>
+                : <div></div>
+            }
             {item.reply.length !== 0 ? item.reply.map((item, idx) => (
                 <Comment.Group>
                     <Comment>
                         <Comment.Content>
-                            <Comment.Metadata>
+                            {/* <Comment.Metadata>
                                 <div>{item.created}</div>
-                            </Comment.Metadata>
+                            </Comment.Metadata> */}
                             <Comment.Text>{item.text}</Comment.Text>
                         </Comment.Content>
                     </Comment>
                 </Comment.Group>
             )) : <div></div>}
-            {toggle ?
-                <Form reply>
-                    <Form.TextArea />
-                    <Button content='Add Reply' labelPosition='left' icon='edit' primary />
-                </Form>
-                :<div></div>
-            }
+
         </Comment>
     );
 }

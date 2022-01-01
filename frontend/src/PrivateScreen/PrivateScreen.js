@@ -5,9 +5,9 @@ import PrivateComments from './PrivateComments'
 
 const PrivateScreen = () => {
     const [error, setError] = useState("");
-    const [privateData, setPrivateData] = useState("");
     const [comments, setComments] = useState();
     useEffect(() => {
+    
         const fetchPrivateDate = async () => {
             const config = {
                 headers: {
@@ -17,7 +17,6 @@ const PrivateScreen = () => {
             };
             try {
                 const { data } = await axios.get("http://localhost:5000/api/private/comments", config);
-                // console.log(data);
                 setComments(data);
             } catch (error) {
                 localStorage.removeItem("authToken");
@@ -34,12 +33,11 @@ const PrivateScreen = () => {
     ) : (
         <div>
             {comments ? (
-                <PrivateComments data={comments} />
+                <PrivateComments  data={comments} />
             ) :
                 (<span>No comments {comments}</span>)
             }
         </div>
-
         // <div>{privateData}</div>
     );
 };

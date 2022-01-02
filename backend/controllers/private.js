@@ -18,8 +18,9 @@ exports.getComments = async (req, res, next) => {
 }
 
 exports.postComments = async (req, res, next) => {
-    const comment = req.body;
-    const data = await Comment.create({ text: comment.data });
+    const comment = req.body.comment;
+    // console.log(comment);
+    const data = await Comment.create({ text: comment});
     data.author._id = req.user._id;
     data.author.username = req.user.username;
     // console.log(data);
@@ -31,9 +32,9 @@ exports.postComments = async (req, res, next) => {
 }
 
 exports.getReplyComments = async (req, res, next) => {
-    console.log(req.params.replyid);
+    // console.log(req.params.replyid);
     const data = await Comment.findById(req.params.replyid);
-    console.log(data);
+    // console.log(data);
     res.status(200).json({
         sucess: "true",
         data: data

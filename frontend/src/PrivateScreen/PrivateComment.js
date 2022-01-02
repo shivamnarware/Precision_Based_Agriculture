@@ -15,9 +15,9 @@ function PrivateComment({ value }) {
     const submitHandler = async (e) => {
         e.preventDefault();
         const config = {
-            header: {
+            headers: {
                 "Content-Type": "application/json",
-                // Authorization: `Shivam ${localStorage.getItem("authToken")}`,
+                Authorization: `Shivam ${localStorage.getItem("authToken")}`,
             },
         };
         try {

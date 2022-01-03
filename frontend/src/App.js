@@ -34,13 +34,13 @@ function App() {
           {/* <PrivateRoute exact path="/" component={PrivateScreen} /> */}
           <Switch>
             
-            <Route path="/" exact component={Home} />
-            <Route path="/register" exact component={Register} />
-            <Route path="/login" exact component={Login} />
+            <Route exact path="/" exact component={Home} />
+            <Route exact path="/register" exact component={Register} />
+            <Route exact path="/login" exact component={Login} />
             <Route  exact path="/screen" component={PrivateScreen}/>
-            <Route path="/fertilizer" exact component={Fertilizers} />
-            <Route path="/irrigation" exact component={Irrigation} />
-            <Route path="/croptype" exact component={CropType} />
+            <Route exact path="/fertilizer" exact component={Fertilizers} />
+            <Route exact path="/irrigation" exact component={Irrigation} />
+            <Route exact path="/croptype" exact component={CropType} />
           </Switch>
           <Footer />
         </div>

@@ -12,9 +12,10 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { makeStyles } from '@mui/styles';
-
+import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 const pages = ['Products', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Register', 'Login', 'Logout'];
 
 const useStyles = makeStyles({
     root: {
@@ -22,6 +23,8 @@ const useStyles = makeStyles({
     }
 });
 const ResponsiveAppBar = () => {
+    let history = useHistory();
+
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -85,11 +88,17 @@ const ResponsiveAppBar = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">
+                                    <Link style={{ color: 'black', textDecoration: 'none' }} to={`/`}>Products</Link>
+                                </Typography>
+
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">
+                                    <Link style={{ color: 'black', textDecoration: 'none' }} to={`/screen`}>Blog</Link>
+                                </Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <Typography
@@ -101,15 +110,16 @@ const ResponsiveAppBar = () => {
                         Technofarmacist
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                {page}
-                            </Button>
-                        ))}
+
+                        {/* <Button
+                            // onclick={history.push("/")}
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Products
+                        </Button> */}
+                        <Link style={{ paddingLeft: "1%", marginRight: "2%", color: 'white', display: 'block', textDecoration: 'none' }} to={`/`}>Products</Link>
+                        <Link style={{ color: 'white', display: 'block', textDecoration: 'none' }} to={`/screen`}>Blog</Link>
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>

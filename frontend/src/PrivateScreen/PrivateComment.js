@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Comment } from 'semantic-ui-react'
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
+
 function PrivateComment({ value }) {
     const [toggle, setToggle] = useState(false);
     const [result, setResult] = useState("");
@@ -46,7 +47,7 @@ function PrivateComment({ value }) {
                 </Comment.Actions>
             </Comment.Content>
             {toggle ?
-                <Form reply>
+                <Form reply style={{marginLeft:"10%"}}>
                     <Form.TextArea onChange={(e) => setResult(e.target.value)} />
                     <Button onClick={submitHandler} content='Add Reply' labelPosition='left' icon='edit' primary />
                 </Form>

@@ -10,18 +10,20 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from 'axios';
 import { Box } from '@mui/system';
+import { useHistory } from "react-router-dom";
 
-const Login = ({ history }) => {
+
+const Login = ({  }) => {
     const paperStyle = { padding: '30px 50px', width: 350, margin: "70px auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
     const marginbwbox = { marginBottom: "6%", marginLeft: "2%" }
-
-    // useEffect(() => {
-    //     if (localStorage.getItem("authToken")) {
-    //         history.push("/")
-    //     }
-    // }, [history])
+    let history = useHistory();
+    useEffect(() => {
+        if (localStorage.getItem("authToken")) {
+            history.push("/")
+        }
+    }, [history])
 
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
@@ -55,22 +57,38 @@ const Login = ({ history }) => {
             }
         };
 
+        const validateEmail = (email) => {
+            return String(email)
+                .toLowerCase()
+                .match(
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                );
+        };
+        if (!validateEmail(email)) {
+            setEmail("");
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+            return setError("Enter valid mail");
+        }
+
         try {
             const password = values.password
             if (email && password) {
-                const {data} = await axios.post("http://localhost:5000/api/auth/login", { email, password }, config);
+                const { data } = await axios.post("http://localhost:5000/api/auth/login", { email, password }, config);
                 console.log(data)
-                if (!data.error)
+                if (!data.error) {
                     setError("");
                     localStorage.setItem("authToken", data.token);
-                    
-                if (data.error){
+                    history.push("/")
+                }
+                if (data.error) {
                     setError("Invalid credentials");
                     localStorage.removeItem("authToken");
                 }
             } else {
                 setError("Please Add valid email and password");
-                
+
             }
             // history.push("/");
         } catch (error) {

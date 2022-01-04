@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import "./PrivateScreen.css";
+import { Box } from "@mui/system";
 import PrivateComments from './PrivateComments'
+import { Link } from "react-router-dom";
+
+
 
 const PrivateScreen = () => {
     const [error, setError] = useState("");
     const [comments, setComments] = useState();
     useEffect(() => {
-    
+
         const fetchPrivateDate = async () => {
             const config = {
                 headers: {
@@ -29,11 +32,34 @@ const PrivateScreen = () => {
 
     console.log(comments)
     return error ? (
-        <span>{error}</span>
+        <Box
+            component="form"
+            sx={{
+                '& .MuiTextField-root': { m: 0, width: '25ch' },
+                marginLeft: "15%",
+                marginRight: "15%",
+                border: '1px solid grey',
+                paddingTop: "5%",
+                marginTop: "5%",
+                borderRadius: "7px",
+                boxShadow: "5px 10px #08308E",
+                paddingBottom: "5%"
+            }}
+            noValidate
+            autoComplete="off"
+            textAlign="center"
+        >
+            {error}
+            <br></br>
+            <div style={{ paddingTop: "2%"}}>
+                <Link style={{ paddingTop: "7%", color: 'black', textDecoration: 'none' }} to={`/login`}>Login</Link>
+            </div>
+
+        </Box>
     ) : (
         <div>
             {comments ? (
-                <PrivateComments  data={comments} />
+                <PrivateComments data={comments} />
             ) :
                 (<span>No comments {comments}</span>)
             }

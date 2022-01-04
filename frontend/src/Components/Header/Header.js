@@ -13,7 +13,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { makeStyles } from '@mui/styles';
 import { Link } from 'react-router-dom';
+import { set } from 'mongoose';
 import { useHistory } from "react-router-dom";
+
+
+
 const pages = ['Products', 'Blog'];
 const settings = ['Register', 'Login', 'Logout'];
 
@@ -23,7 +27,7 @@ const useStyles = makeStyles({
     }
 });
 const ResponsiveAppBar = () => {
-    let history = useHistory();
+
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -42,6 +46,21 @@ const ResponsiveAppBar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+    let history = useHistory();
+    const logoutHandler = (e) => {
+        e.preventDefault();
+        localStorage.removeItem("authToken");
+        setToggle(true);
+        history.push("/");
+    }
+
+    const [toggle, setToggle] = React.useState(true);
+    React.useEffect(() => {
+        if (localStorage.getItem("authToken")) {
+            setToggle(false);
+        }
+    }, [localStorage.getItem("authToken")])
+
 
     const classes = useStyles();
 
@@ -110,14 +129,6 @@ const ResponsiveAppBar = () => {
                         Technofarmacist
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-
-                        {/* <Button
-                            // onclick={history.push("/")}
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: 'white', display: 'block' }}
-                        >
-                            Products
-                        </Button> */}
                         <Link style={{ paddingLeft: "1%", marginRight: "2%", color: 'white', display: 'block', textDecoration: 'none' }} to={`/`}>Products</Link>
                         <Link style={{ color: 'white', display: 'block', textDecoration: 'none' }} to={`/screen`}>Blog</Link>
                     </Box>
@@ -144,11 +155,26 @@ const ResponsiveAppBar = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            {toggle ? (
+                                <>
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Button textAlign="center">
+                                            <Link style={{ color: 'black', textDecoration: 'none' }} to={`/login`}>Login</Link>
+                                        </Button>
+                                    </MenuItem>
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Button textAlign="center">
+                                            <Link style={{ color: 'black', textDecoration: 'none' }} to={`/register`}>Register</Link>
+                                        </Button>
+                                    </MenuItem>
+                                </>
+                            ) : (
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                    <Button style={{ color: 'black', textDecoration: 'none' }} onClick={logoutHandler} textAlign="center">
+                                        Logout
+                                    </Button>
+                                </MenuItem>)}
+
                         </Menu>
                     </Box>
                 </Toolbar>

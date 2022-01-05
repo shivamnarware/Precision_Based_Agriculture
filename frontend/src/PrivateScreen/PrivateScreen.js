@@ -5,7 +5,6 @@ import PrivateComments from './PrivateComments'
 import { Link } from "react-router-dom";
 
 
-
 const PrivateScreen = () => {
     const [error, setError] = useState("");
     const [comments, setComments] = useState();
@@ -57,14 +56,13 @@ const PrivateScreen = () => {
 
         </Box>
     ) : (
-        <div>
+        <div style={{marginTop:"5%",marginLeft:"25%"}}>
             {comments ? (
                 <PrivateComments data={comments} />
             ) :
                 (<span>No comments {comments}</span>)
             }
         </div>
-        // <div>{privateData}</div>
     );
 };
 

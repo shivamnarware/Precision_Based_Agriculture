@@ -34,8 +34,8 @@ const PrivateComments = ({ data }) => {
                     <PrivateComment value={item} />
                 )) : <span>No Comments</span>
             }
-            <Form reply>
-                <Form.TextArea onChange={(e) => setComment(e.target.value)} />
+            <Form style={{ minHeight: 50 }} reply>
+                <Form.TextArea   onChange={(e) => setComment(e.target.value)} />
                 <Button onClick={submitHandler} content='Add Comment' labelPosition='left' icon='edit' primary />
             </Form>
         </Comment.Group>

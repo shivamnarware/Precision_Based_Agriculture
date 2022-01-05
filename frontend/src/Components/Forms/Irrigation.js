@@ -68,7 +68,7 @@ function Irrigation(props) {
                 noValidate
                 autoComplete="off"
             >
-                <div style={{ marginLeft: "35%", marginRight: "30%" }}>
+                <div style={{ marginLeft: "35%", marginRight: "35%" }}>
                     <div>
                         <Typography variant="h4" gutterBottom component="div"
                             style={{ textAlign: "center", marginBottom: "12%", border: '1px solid grey', boxShadow: "2px 5px 2px #08308E", paddingTop: "2%", paddingBottom: "2%" }} >
@@ -82,6 +82,7 @@ function Irrigation(props) {
                             variant="outlined"
                             error={error.soilHumidity === ""}
                             helperText="Please select soil Humidity(bar)"
+                            style={{ width: '100%', paddingBottom: "14px" }}
                             onChange={(e) => {
                                 setRes({ ...res, soilHumidity: e.target.value })
                                 setError({ ...error, soilHumidity: e.target.value })
@@ -96,6 +97,7 @@ function Irrigation(props) {
                             variant="outlined"
                             error={error.soilwater === ""}
                             helperText="Please select soil water content (volume per 5cm )"
+                            style={{ width: '100%', paddingBottom: "14px" }}
                             onChange={(e) => {
                                 setRes({ ...res, soilwater: e.target.value })
                                 setError({ ...error, soilwater: e.target.value })
@@ -111,6 +113,7 @@ function Irrigation(props) {
                             label="Crop Season"
                             value={season}
                             onChange={handleChangeForTypeOfIrrigation}
+                            style={{ width: '100%', paddingBottom: "14px" }}
                             helperText="Please select Crop Season"
                         >
                             {cropseason.map((option, idx) => (
@@ -127,7 +130,8 @@ function Irrigation(props) {
                             variant="outlined"
                             error={error.area === ""}
                             helperText="Please select Area (Hectacre)"
-                            style={{ paddingBottom: "30px" }}
+                            style={{ width: '100%', paddingBottom: "14px" }}
+                            // style={{ paddingBottom: "30px" }}
                             onChange={(e) => {
                                 setRes({ ...res, area: e.target.value })
                                 setError({ ...error, area: e.target.value })
@@ -136,7 +140,7 @@ function Irrigation(props) {
                         />
                     </div>
                     <div>
-                        <ColorButton onClick={submitHandler} variant="contained">Predict</ColorButton>
+                        <ColorButton  style={{ width: '100%', marginLeft:"2%",paddingBottom: "14px" }} onClick={submitHandler} variant="contained">Predict</ColorButton>
                     </div>
                 </div>
             </Box>

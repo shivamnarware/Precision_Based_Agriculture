@@ -56,12 +56,12 @@ function PrivateComment({ value }) {
             {item.reply.length !== 0 ? item.reply.map((item, idx) => (
                 <Comment.Group>
                     <Comment>
-                        <Comment.Content>
+                        {/* <Comment.Content> */}
                             {/* <Comment.Metadata>
                                 <div>{item.created}</div>
                             </Comment.Metadata> */}
                             <Comment.Text>{item.text}</Comment.Text>
-                        </Comment.Content>
+                        {/* </Comment.Content> */}
                     </Comment>
                 </Comment.Group>
             )) : <div></div>}

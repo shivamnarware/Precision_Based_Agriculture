@@ -29,11 +29,8 @@ function App() {
         <div className="App">
           <ScrollToTop />
           <Header />
-          {/* <PrivateComment /> */}
-         
           {/* <PrivateRoute exact path="/" component={PrivateScreen} /> */}
           <Switch>
-            
             <Route exact path="/" exact component={Home} />
             <Route exact path="/register" exact component={Register} />
             <Route exact path="/login" exact component={Login} />

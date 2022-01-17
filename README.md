@@ -13,5 +13,6 @@
 * Added Logout Section
 * Added Reply Section
 * Associate Reply with Comment
-* Added Comment component 
+* Added Comment component
+* Adding ER diagrams for the relationship between schemas 
 * Added authorization

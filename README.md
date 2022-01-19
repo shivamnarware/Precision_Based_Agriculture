@@ -3,16 +3,20 @@
 # React Components
 * Added Navbar
 * Added Footer
-* Added Carouesl and adjusted its height
+* Added Carousel and adjusted its height
 * Added Cards
 * Added Forms
-* Modified ML backend
 * Connected form and ML backend
 * Added Registration Form
 * Added Login Form
 * Added Logout Section
-* Added Reply Section
+
+# Backend Development ML
+* Modified ML backend
+
+# Backend Development
 * Associate Reply with Comment
 * Added Comment component
+* Added Reply Section
 * Adding ER diagrams for the relationship between schemas 
 * Added authorization

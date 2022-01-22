@@ -9,15 +9,16 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-fertilizer = pickle.load(open('fertilizer.pkl', 'rb'))
-irrigation = pickle.load(open('irrigation.pkl', 'rb'))
-model5 = pickle.load(open('model4.pkl', 'rb'))
-croptype = pickle.load(open('croptype.pkl', 'rb'))
+modelfertlizer = pickle.load(open('fertilizer.pkl', 'rb'))
+modelirrigation = pickle.load(open('irrigation.pkl', 'rb'))
+modelcroptype = pickle.load(open('croptype.pkl', 'rb'))
+
 
 
 @app.route('/fertilizer',methods=['POST'])
 def predict():
     data=json.loads(request.data)
+    print(data)
     soiltype=float(data["soilType"])
     n=float(data['n'])
     p=float(data['p'])
@@ -27,7 +28,7 @@ def predict():
     int_features=[soiltype,n,p,k,fertilizer,croptype]
     nm=preprocessing.scale(int_features)
     final_features = [np.array(nm)]
-    prediction = fertilizer.predict(final_features)
+    prediction = modelfertlizer.predict(final_features)
     output = prediction[0]
     res=str(output[0])
     return res
@@ -42,7 +43,7 @@ def predict2():
     int_features = [soilHumidity,soilwater,cropseason,area]
     nm=preprocessing.scale(int_features)
     final_features = [np.array(nm)]
-    prediction = irrigation.predict(final_features)
+    prediction = modelirrigation.predict(final_features)
     output = prediction[0]
     res=str(output[0])
     return res
@@ -61,7 +62,7 @@ def predict4():
     int_features = [n,p,k,temp,humidity,ph,rainfall]
     print(int_features)
     final_features = [np.array(int_features)]
-    prediction = croptype.predict(final_features)
+    prediction = modelcroptype.predict(final_features)
     res=prediction[0]
     return res
 
@@ -71,7 +72,6 @@ def predict3():
     # final_features = [np.array(int_features)]
     # prediction = model3.predict(final_features)
     # output = prediction[0]
-    
     #Working on this route in future for predicting the Crop Production 
     return ""
 

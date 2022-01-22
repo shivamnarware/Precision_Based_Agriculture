@@ -8,10 +8,12 @@ function PrivateComment({ value }) {
     const [result, setResult] = useState("");
     const [item, setItem] = useState(value);
     const [error, setError] = useState("");
+
     const fun = (e) => {
         e.preventDefault();
         setToggle(!toggle);
     }
+    
     let history = useHistory();
     const submitHandler = async (e) => {
         e.preventDefault();

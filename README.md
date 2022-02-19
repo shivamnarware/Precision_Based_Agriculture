@@ -20,3 +20,13 @@
 * Added Reply Section
 * Adding ER diagrams for the relationship between schemas 
 * Added authorization
+
+# Prerequisites
+* Node Js
+* React JS
+* Mongo DB
+* Express
+* Mongoose
+* Redux
+* Python  
+* Flask

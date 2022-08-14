@@ -1,25 +1,11 @@
 # Precision_Based_Agriculture
+IT-based solution for Precision based irrigation, fertigation, crop maturity, crop growth. Basically in MERN (Mongo DB, Express, React, Node Js) along with Machine learning Predictive Modeling. Model is made using the Data From Kaggle and Machine Learning Algorithm are applied to it and model are saved as respectively in BackendML Folder.
 
-# React Components
-* Added Navbar
-* Added Footer
-* Added Carousel and adjusted its height
-* Added Cards
-* Added Forms
-* Connected form and ML backend
-* Added Registration Form
-* Added Login Form
-* Added Logout Section
+## High Level Diagram
 
-# Backend Development ML
-* Modified ML backend
+## Dependencies
 
-# Backend Development
-* Associate Reply with Comment
-* Added Comment component
-* Added Reply Section
-* Adding ER diagrams for the relationship between schemas 
-* Added authorization
+## Database Model Design
 
 # Prerequisites
 * Node Js

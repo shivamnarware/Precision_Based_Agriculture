@@ -4,11 +4,17 @@ IT-based solution for Precision based irrigation, fertigation, crop maturity, cr
 ## High Level Diagram
 ![High Level Diagram](https://github.com/shivamnarware/Precision_Based_Agriculture/blob/main/Images/HLD.PNG)
 
-## Dependencies
+## UseCase Diagram
+![UseCase Diagram](https://github.com/shivamnarware/Precision_Based_Agriculture/blob/main/Images/Use_Case_Diagram.PNG)
 
 ## Database Model Design
+![Database Model Design](https://github.com/shivamnarware/Precision_Based_Agriculture/blob/main/Images/Database_Model_Design.PNG)
 
-# Prerequisites
+## Dependencies
+
+
+
+## Prerequisites
 * Node Js
 * React JS
 * Mongo DB

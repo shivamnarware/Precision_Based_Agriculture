@@ -10,7 +10,26 @@ IT-based solution for Precision based irrigation, fertigation, crop maturity, cr
 ## Database Model Design
 ![Database Model Design](https://github.com/shivamnarware/Precision_Based_Agriculture/blob/main/Images/Database_Model_Design.PNG)
 
+<br />
+
+## Images of the Application 
+![Img_1](https://github.com/shivamnarware/Precision_Based_Agriculture/blob/main/Images/Img_1.PNG)
+![Img_2](https://github.com/shivamnarware/Precision_Based_Agriculture/blob/main/Images/Img_2.PNG)
+
 ## Dependencies
+- The project contains 4 broad directories.
+
+```
+├───frontend
+├───backend
+├───backendML
+```
+
+- `client`: The Frontend for the application.
+- ` backend `: Authentication and CRUD Application
+- ` backendML `: ML Models and flask Application.
+
+<br />
 
 
 
